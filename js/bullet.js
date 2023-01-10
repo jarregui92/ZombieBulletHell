@@ -3,14 +3,17 @@ class Bullet{
         this.x = x;
         this.y = y;
         this.angle = angle;
-        this.speed = 16;
+        this.speed = 8;
+        this.img = loadImage('./img/bullet.png');
     }
 
     draw(){
         push();
-        fill(0);
-        circle(this.x, this.y, 5);
+        translate(this.x, this.y);
+        rotate(this.angle);
+        image(this.img, 18, 0, 18, 5);
         pop();
+
     }
 
     update(){
