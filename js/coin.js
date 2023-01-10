@@ -13,7 +13,6 @@ class Coin {
         //translate(this.pos.x, this.pos.y);
         //rotate(angle);
         image(this.img, this.pos.x-25, this.pos.y-25, 800/25, 491/25);
-        console.log('Coin Created as value: '+this.value)
         //rect(0, 0, 20, 20);
         pop();
     }
