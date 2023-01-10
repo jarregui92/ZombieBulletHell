@@ -1,6 +1,6 @@
 let player;
 let zombies = [];
-
+let coins = [];
 let zombieSpawnTime = 300;
 let zombieMaxSpeed = 2;
 let frame = 0
@@ -21,6 +21,7 @@ function draw(){
     player.draw();
     player.update();
 
+    //ESTO MANTIENE CON VIDA LOS ZOMBIES MIENTRAS ESTEN EN EL ARRAY
     for (let i = zombies.length - 1; i >= 0; i--) {
         zombies[i].draw();
         zombies[i].update();
@@ -36,10 +37,22 @@ function draw(){
         }
 
         if (player.hasShot(zombies[i])) {
-            score ++;
-          zombies.splice(i, 1);
+            zombies[i].died(zombies[i].pos)
+            coins.push(new Coin(random(10), zombies[i].pos));
+            
+            zombies.splice(i, 1);
         }
-      }
+    }
+    
+    //ESTO MANTIENE CON VIDA LAS MONEDAS MIENTRAS ESTEN EN EL ARRAY
+    for (let c = coins.length -1; c >= 0; c--) {
+        coins[c].draw();
+
+        if(coins[c].getCoin()){
+            score += Math.ceil(coins[c].value);
+            coins.splice(c, 1);
+        }
+    }
 
     if(frame >= zombieSpawnTime){
         zombies.push(new Zombie(random(zombieMaxSpeed)));
@@ -60,6 +73,7 @@ function draw(){
 function restart(){
     player = new Player();
     zombies = [];
+    coins = [];
     zombieSpawnTime = 300;
     zombieMaxSpeed = 2;
     score = 0;

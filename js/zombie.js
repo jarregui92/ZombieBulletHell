@@ -3,6 +3,8 @@ class Zombie {
         this.speed = speed;
         let y;
         this.img = loadImage('./img/zombie.png');
+        this.blood = loadImage('./img/blood.png');
+        
 
         if(random(1) < 0.5){
             //desde arriba
@@ -35,5 +37,9 @@ class Zombie {
 
     ateYou(){
         return dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 20;
+    }
+
+    died(pos){
+        image(this.blood, pos.x-35, pos.y-35, 100, 100)
     }
 }
