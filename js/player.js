@@ -5,6 +5,7 @@ class Player {
       this.bullets = [];
       this.img = loadImage('./img/player.png');
       this.life = 50;
+      this.totalLife = 50;
     }
     
     draw() {
@@ -13,7 +14,7 @@ class Player {
         rotate(this.angle);
         //F
         fill(0,0,0);
-        rect(-35, 0, 5, 25);
+        rect(-35, 0, 5, totalLife);
         fill(255,0,0);
         rect(-35, 0, 5, this.life);
         image(this.img, -25, -35, 50, 50);

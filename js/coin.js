@@ -3,7 +3,6 @@ class Coin {
         this.value = value;
         this.pos = pos;
         this.img = loadImage('./img/coin.png');
-
     }
 
     draw(){
