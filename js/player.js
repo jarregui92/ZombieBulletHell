@@ -14,7 +14,7 @@ class Player {
         rotate(this.angle);
         //F
         fill(0,0,0);
-        rect(-35, 0, 5, totalLife);
+        rect(-35, 0, 5, this.totalLife);
         fill(255,0,0);
         rect(-35, 0, 5, this.life);
         image(this.img, -25, -35, 50, 50);
