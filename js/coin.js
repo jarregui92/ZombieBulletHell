@@ -2,18 +2,16 @@ class Coin {
     constructor(value, pos){
         this.value = value;
         this.pos = pos;
-        this.img = loadImage('./img/coin.png');
+        this.img = gameAssets.coinImg; // Usar imagen precargada
     }
 
     draw(){
-        push();
-        //fill(100, 255, 100);
-        //let angle = atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
-        //translate(this.pos.x, this.pos.y);
-        //rotate(angle);
-        image(this.img, this.pos.x-25, this.pos.y-25, 800/25, 491/25);
-        //rect(0, 0, 20, 20);
-        pop();
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(frameCount / 10.0);
+    imageMode(CENTER);
+    image(this.img, 0, 0, 800/25, 491/25);
+    pop();
     }
 
     update(){

@@ -7,6 +7,16 @@ let frame = 0
 let score = 0;
 
 let bg;
+let gameAssets = {};
+
+function preload() {
+    gameAssets.playerImg = loadImage('./img/player.png');
+    gameAssets.zombieImg = loadImage('./img/zombie.png');
+    gameAssets.bulletImg = loadImage('./img/bullet.png');
+    gameAssets.coinImg = loadImage('./img/coin.png');
+    gameAssets.bloodImg = loadImage('./img/blood.png');
+    gameAssets.bg = loadImage('./img/background.jpg');
+}
 
 function setup(){
     bg = loadImage('./img/background.jpg');
@@ -15,6 +25,12 @@ function setup(){
 }
 
 function draw(){
+    // Limitar el número máximo de zombies
+    const MAX_ZOMBIES = 50;
+    if (zombies.length >= MAX_ZOMBIES) {
+        zombieSpawnTime = Math.max(zombieSpawnTime, 300);
+    }
+
     background(bg);
     
     rectMode(CENTER);

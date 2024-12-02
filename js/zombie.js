@@ -2,8 +2,8 @@ class Zombie {
     constructor(speed){
         this.speed = speed;
         let y;
-        this.img = loadImage('./img/zombie.png');
-        this.blood = loadImage('./img/blood.png');
+        this.img = gameAssets.zombieImg; // Usar imagen precargada
+        this.blood = gameAssets.bloodImg;
         
 
         if(random(1) < 0.5){

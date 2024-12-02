@@ -4,7 +4,8 @@ class Bullet{
         this.y = y;
         this.angle = angle;
         this.speed = 8;
-        this.img = loadImage('./img/bullet.png');
+        this.img = gameAssets.bulletImg; // Usar imagen precargada
+        this.createdAt = millis();
     }
 
     draw(){
@@ -19,5 +20,9 @@ class Bullet{
     update(){
         this.x += this.speed * cos(this.angle);
         this.y += this.speed * sin(this.angle);
+    }
+
+    isExpired(){
+        return millis() - this.createdAt > 1000;
     }
 }

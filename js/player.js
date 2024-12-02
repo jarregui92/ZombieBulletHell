@@ -3,9 +3,10 @@ class Player {
       this.pos = createVector(width / 2, height / 2)
       this.angle = 0;
       this.bullets = [];
-      this.img = loadImage('./img/player.png');
+      this.img = gameAssets.playerImg; // Usar imagen precargada
       this.life = 50;
       this.totalLife = 50;
+      this.maxBullets = 50; // Limitar cantidad de balas
     }
     
     draw() {
@@ -20,9 +21,13 @@ class Player {
         image(this.img, -25, -35, 50, 50);
         pop();
 
-        for (let bullet of this.bullets){
-            bullet.update();
-            bullet.draw();
+        for (let i = this.bullets.length - 1; i >= 0; i--) {
+            if (this.bullets[i].isExpired()) {
+                this.bullets.splice(i, 1);
+            } else {
+                this.bullets[i].update();
+                this.bullets[i].draw();
+            }
         }
     }
   
@@ -51,7 +56,9 @@ class Player {
     }
 
     shoot(){
-        this.bullets.push(new Bullet(this.pos.x, this.pos.y, this.angle))
+        if (this.bullets.length < this.maxBullets) {
+            this.bullets.push(new Bullet(this.pos.x, this.pos.y, this.angle));
+        }
     }
 
     hasShot(zombie) {
