@@ -6,6 +6,7 @@ let zombieSpawnTime = 300;
 let zombieMaxSpeed = 2;
 let frame = 0
 let score = 0;
+let gameTime = 0; // Add game time counter
 
 let bg;
 let gameAssets = {};
@@ -26,6 +27,7 @@ function setup(){
     cnv.parent(canvasContainer);
     bg = loadImage('./img/background.jpg');
     player = new Player();
+    gameTime = 0;
 }
 
 function draw(){
@@ -100,11 +102,18 @@ function draw(){
     }
     frame++;
 
-
-
-    // Update the score and zombies alive in the HTML
+    // Update game time (convert frames to seconds)
+    gameTime = Math.floor(frameCount / 60);
+    
+    // Format time as mm:ss
+    let minutes = Math.floor(gameTime / 60);
+    let seconds = gameTime % 60;
+    let timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Update the UI
     document.querySelector('#score').textContent = score.toString().padStart(6, '0');
     document.querySelector('#zombies-alive').textContent = zombies.length;
+    document.querySelector('#game-time').textContent = timeString;
 }
 
 function restart(){
@@ -115,6 +124,8 @@ function restart(){
     zombieSpawnTime = 300;
     zombieMaxSpeed = 2;
     score = 0;
+    gameTime = 0;
+    frameCount = 0; // Resetear el frameCount para que el tiempo empiece de 0
 }
 
 function mouseClicked(){
