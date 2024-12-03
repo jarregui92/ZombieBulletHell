@@ -1,16 +1,94 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Bullet Hell</title>
 </head>
-<body>
-    
+
+<body class="bg-zinc-900 min-h-screen flex items-center justify-center" style="background-image: url('https://example.com/zombie-wallpaper.jpg'); background-size: cover; background-position: center;">
+    <main class="max-w-4xl mx-full">
+        <div class="text-center mb-4">
+            <h1
+                class="text-2xl font-bold bg-gradient-to-r from-green-500 to-red-600 bg-clip-text text-transparent mb-2 animate-pulse">
+                ZOMBIE APOCALYPSE</h1>
+            <p class="text-gray-400 text-lg">¡Survive the Bullet Hell!</p>
+        </div>
+
+        <div
+            class="relative w-[700px] h-[700px] mx-auto bg-gradient-to-b from-zinc-800 to-zinc-900 rounded-lg border-4 border-green-600/50 shadow-lg shadow-green-500/20 overflow-hidden">
+            <div
+                class="absolute inset-0 ">
+                <div id="game-container" class="flex justify-center items-center">
+                    <!-- El lienzo de p5.js se colocará aquí -->
+                </div>
+            </div>
+            <div
+                class="absolute bottom-4 left-4 right-4 flex justify-between items-center px-6 py-3 bg-zinc-800/90 rounded-lg">
+                <div class="flex gap-4">
+                    <div class="text-green-500">
+                        <span class="block text-xs text-gray-400">SCORE</span>
+                        <span id="score" class="font-mono font-bold">000000</span>
+                    </div>
+                    <div class="text-red-500">
+                        <span class="block text-xs text-gray-400">LIVES</span>
+                        <span class="font-mono font-bold">01</span>
+                    </div>
+                    <div class="text-yellow-500">
+                        <span class="block text-xs text-gray-400">ZOMBIES ALIVE</span>
+                        <span id="zombies-alive" class="font-mono font-bold">0</span>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500/50 opacity-50 cursor-not-allowed"
+                        aria-label="Settings" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                    <button
+                        class="p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500/50 opacity-50 cursor-not-allowed"
+                        aria-label="Fullscreen" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 text-center">
+            <div class="p-2 bg-zinc-800 rounded-lg">
+                <h3 class="text-sm text-green-500 font-bold mb-2">HIGH SCORES</h3>
+                <div class="text-gray-400 space-y-1">
+                    <p class="text-sm">Soon !</p>
+                    <!-- <p>Player1: 150000</p>
+                    <p>Player2: 120000</p>
+                    <p>Player3: 090000</p> -->
+                </div>
+            </div>
+            <div class="p-2 bg-zinc-800 rounded-lg">
+                <h3 class="text-sm text-green-500 font-bold mb-2">CONTROLS</h3>
+                <div class="text-gray-400 space-y-1">
+                    <p class="text-sm">WASD - Move</p>
+                    <p class="text-sm">Click - Shoot</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
 
     <script src="./js/sketch.js"></script>
     <script src="./js/player.js"></script>
@@ -18,4 +96,5 @@
     <script src="./js/bullet.js"></script>
     <script src="./js/coin.js"></script>
 </body>
+
 </html>

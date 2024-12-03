@@ -19,14 +19,16 @@ function preload() {
 }
 
 function setup(){
+    let canvasContainer = select('#game-container')
+    let cnv = createCanvas(700, 700);
+    cnv.parent(canvasContainer);
     bg = loadImage('./img/background.jpg');
-    createCanvas(700,700);
     player = new Player();
 }
 
 function draw(){
     // Limitar el número máximo de zombies
-    const MAX_ZOMBIES = 50;
+    const MAX_ZOMBIES = 100;
     if (zombies.length >= MAX_ZOMBIES) {
         zombieSpawnTime = Math.max(zombieSpawnTime, 300);
     }
@@ -81,9 +83,11 @@ function draw(){
     }
     frame++;
 
-    textAlign(CENTER);
-    textSize(40);
-    text(score, width/2, 100);
+
+
+    // Update the score and zombies alive in the HTML
+    document.querySelector('#score').textContent = score.toString().padStart(6, '0');
+    document.querySelector('#zombies-alive').textContent = zombies.length;
 }
 
 function restart(){
