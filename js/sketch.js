@@ -1,6 +1,7 @@
 let player;
 let zombies = [];
 let coins = [];
+let hearts = []; // Nuevo array para corazones
 let zombieSpawnTime = 300;
 let zombieMaxSpeed = 2;
 let frame = 0
@@ -14,6 +15,7 @@ function preload() {
     gameAssets.zombieImg = loadImage('./img/zombie.png');
     gameAssets.bulletImg = loadImage('./img/bullet.png');
     gameAssets.coinImg = loadImage('./img/coin.png');
+    gameAssets.heartImg = loadImage('./img/heart.png');
     gameAssets.bloodImg = loadImage('./img/blood.png');
     gameAssets.bg = loadImage('./img/background.jpg');
 }
@@ -39,6 +41,15 @@ function draw(){
     player.draw();
     player.update();
 
+    // Dibujar y actualizar corazones
+    for (let h = hearts.length - 1; h >= 0; h--) {
+        hearts[h].draw();
+        if(hearts[h].getHeart()){
+            player.life = Math.min(player.life + 50, player.totalLife); // No exceder vida máxima
+            hearts.splice(h, 1);
+        }
+    }
+
     //ESTO MANTIENE CON VIDA LOS ZOMBIES MIENTRAS ESTEN EN EL ARRAY
     for (let i = zombies.length - 1; i >= 0; i--) {
         zombies[i].draw();
@@ -55,8 +66,14 @@ function draw(){
         }
 
         if (player.hasShot(zombies[i])) {
-            zombies[i].died(zombies[i].pos)
-            coins.push(new Coin(random(10), zombies[i].pos));
+            zombies[i].died(zombies[i].pos);
+            
+            // 10% chance de soltar corazón, 90% moneda
+            if (random(1) < 0.1) {
+                hearts.push(new Heart(50, zombies[i].pos));
+            } else {
+                coins.push(new Coin(random(10), zombies[i].pos));
+            }
             
             zombies.splice(i, 1);
         }
@@ -94,6 +111,7 @@ function restart(){
     player = new Player();
     zombies = [];
     coins = [];
+    hearts = []; // Resetear corazones
     zombieSpawnTime = 300;
     zombieMaxSpeed = 2;
     score = 0;
