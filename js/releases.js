@@ -78,12 +78,12 @@ function renderReleases() {
     [...releases].reverse().forEach((release, index) => {
         const isEven = index % 2 === 0;
         const html = `
-            <div class="mb-8 flex justify-between ${isEven ? '' : 'flex-row-reverse'} items-center w-full">
+            <div class="mb-8 md:flex justify-between ${isEven ? '' : 'flex-row-reverse'} items-center w-full">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 flex items-center order-1 bg-green-500 shadow-xl w-12 h-12 rounded-full">
+                <div class="z-20 mb-2 md:mb-0 flex items-center order-1 shadow-xl w-12 h-12 rounded-full">
                     <img src="/img/zombie-icon.svg" class="mx-auto">
                 </div>
-                <div class="order-1 bg-zinc-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <div class="order-1 bg-zinc-800 rounded-lg shadow-xl md:w-5/12 px-6 py-4 w-full">
                     <time class="font-mono italic text-green-500">${release.date}</time>
                     <h3 class="mb-3 font-bold text-green-400 text-xl">Version ${release.version}</h3>
                     <ul class="list-disc list-inside text-sm text-gray-300">
