@@ -60,6 +60,14 @@ const releases = [
             "Se agrega el item HEART para recuperar vida",
             "Se agrega tiempo de juego transcurrido al HUB",
         ]
+    },
+    {
+        version: "1.0.7",
+        date: "10-12-2024",
+        changes: [
+            "Se agrega el item BOMB para matar a todos los zombies en la pantalla",
+            "Se pagina de Releases en el sitio web del juego",
+        ]
     }
 
 ];
