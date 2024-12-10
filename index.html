@@ -7,12 +7,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/img/zombie-icon.svg" type="image/x-icon">
     <title>Bullet Hell</title>
 </head>
 
 <body class="bg-zinc-900 min-h-screen flex items-center justify-center" style="background-image: url('https://example.com/zombie-wallpaper.jpg'); background-size: cover; background-position: center;">
     <main class="max-w-4xl mx-full">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 relative">
+            <div class="absolute top-0 right-0 z-50">
+                <div class="p-2 bg-zinc-800 rounded-lg hover:bg-zinc-700 transition-colors">
+                    <h3 class="text-sm text-green-500 font-bold mb-0">
+                        <a href="releases.html" class="hover:text-green-400 transition-colors block w-full h-full">
+                            RELEASE NOTES
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </a>
+                    </h3>
+                </div>
+            </div>
             <h1
                 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-red-600 bg-clip-text text-transparent mb-2 animate-pulse">
                 ZOMBIE APOCALYPSE</h1>
@@ -21,8 +34,8 @@
 
         <div
             class="relative w-[700px] h-[700px] mx-auto bg-gradient-to-b from-zinc-800 to-zinc-900 rounded-lg border-4 border-green-600/50 shadow-lg shadow-green-500/20 overflow-hidden">
-            <div
-                class="absolute inset-0 ">
+            
+                <div class="absolute inset-0 ">
                 <div id="game-container" class="flex justify-center items-center">
                     <!-- El lienzo de p5.js se colocará aquí -->
                 </div>
@@ -89,6 +102,7 @@
                     <p class="text-sm">Click - Shoot</p>
                 </div>
             </div>
+           
         </div>
     </main>
 
@@ -100,6 +114,7 @@
     <script src="./js/bullet.js"></script>
     <script src="./js/coin.js"></script>
     <script src="./js/heart.js"></script>
+    <script src="./js/bomb.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 let player;
 let zombies = [];
 let coins = [];
-let hearts = []; // Nuevo array para corazones
+let hearts = [];
+let bombs = []; // Add bombs array
 let zombieSpawnTime = 300;
 let zombieMaxSpeed = 2;
 let frame = 0
@@ -19,6 +20,7 @@ function preload() {
     gameAssets.heartImg = loadImage('./img/heart.png');
     gameAssets.bloodImg = loadImage('./img/blood.png');
     gameAssets.bg = loadImage('./img/background.jpg');
+    gameAssets.bombImg = loadImage('./img/bomb.png'); // Add bomb image
 }
 
 function setup(){
@@ -70,9 +72,11 @@ function draw(){
         if (player.hasShot(zombies[i])) {
             zombies[i].died(zombies[i].pos);
             
-            // 10% chance de soltar corazón, 90% moneda
-            if (random(1) < 0.1) {
+            let chance = random(1);
+            if (chance < 0.1) {
                 hearts.push(new Heart(50, zombies[i].pos));
+            } else if (chance < 0.2) {
+                bombs.push(new Bomb(zombies[i].pos));
             } else {
                 coins.push(new Coin(random(10), zombies[i].pos));
             }
@@ -88,6 +92,19 @@ function draw(){
         if(coins[c].getCoin()){
             score += Math.ceil(coins[c].value);
             coins.splice(c, 1);
+        }
+    }
+
+    // After handling coins, handle bombs
+    for (let b = bombs.length -1; b >= 0; b--) {
+        bombs[b].draw();
+        if(bombs[b].getBomb()){
+            // Kill all zombies and create coins
+            for (let z = zombies.length - 1; z >= 0; z--) {
+                coins.push(new Coin(random(10), zombies[z].pos));
+            }
+            zombies = [];
+            bombs.splice(b, 1);
         }
     }
 
@@ -121,6 +138,7 @@ function restart(){
     zombies = [];
     coins = [];
     hearts = []; // Resetear corazones
+    bombs = []; // Reset bombs array
     zombieSpawnTime = 300;
     zombieMaxSpeed = 2;
     score = 0;
