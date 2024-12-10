@@ -66,7 +66,7 @@ const releases = [
         date: "10-12-2024",
         changes: [
             "Se agrega el item BOMB para matar a todos los zombies en la pantalla",
-            "Se pagina de Releases en el sitio web del juego",
+            "Se agrega la pagina de Releases en el sitio web del juego",
         ]
     }
 
