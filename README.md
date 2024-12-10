@@ -2,6 +2,8 @@
 
 ZombieBulletHell es un juego de disparos en 2D donde el jugador debe sobrevivir a oleadas interminables de zombis mientras recoge monedas para aumentar su puntuación.
 
+[![Jugar](https://img.shields.io/badge/Play-Jugar-green)](http://zombiebullethell.jarregui.uy){:target="_blank"}
+
 ## Características
 
 - Jugabilidad rápida y desafiante.
@@ -12,3 +14,4 @@ ZombieBulletHell es un juego de disparos en 2D donde el jugador debe sobrevivir 
 ### 10-12-2024 - Ultima Versión 1.0.7
 - Se agrega el item BOMB para matar a todos los zombies en la pantalla.
 - Se agrega la página de [Releases](http://zombiebullethell.jarregui.uy/releases.html) en el sitio web del juego.
+
