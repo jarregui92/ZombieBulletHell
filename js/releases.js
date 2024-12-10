@@ -3,7 +3,7 @@ const releases = [
         version: "1.0.0",
         date: "04-01-2023",
         changes: [
-            "Primer Commit",
+            "Primer commit",
             "Juego funcional",
             "Movimiento de zombies, daño al jugador",
             "Movimiento del player, disparos"
@@ -29,7 +29,7 @@ const releases = [
         version: "1.0.3",
         date: "17-01-2023",
         changes: [
-            "Correccion del tamaño de la vida del player cuando baja por el ataque de un zombie",
+            "Corrección del tamaño de la vida del player cuando baja por el ataque de un zombie",
         ]
     },
     {
@@ -43,22 +43,22 @@ const releases = [
         version: "1.0.5",
         date: "02-12-2024",
         changes: [
-            "Se actualizo la licencia del juego",
-            "Se añadio el archivo README.md con los detalles del juego",
-            "Optimizacion del uso de imagenes precargadas en el codigo para evitar lag",
+            "Se actualizó la licencia del juego",
+            "Se añadió el archivo README.md con los detalles del juego",
+            "Optimización del uso de imágenes precargadas en el código para evitar lag",
         ]
     },
     {
         version: "1.0.6",
         date: "03-12-2024",
         changes: [
-            "Se mejoro el diseño de la interfaz del juego",
-            "Se integrò Tailwind CSS al proyecto",
-            "Se ajusto el contenedor del lienzo del juego",
-            "Se aumento el limite de zombies a 100",
-            "Se agrega el puntaje y la cantidad de zombies vivos al HUB",
+            "Se mejoró el diseño de la interfaz del juego",
+            "Se integró Tailwind CSS al proyecto",
+            "Se ajustó el contenedor del lienzo del juego",
+            "Se aumentó el límite de zombies a 100",
+            "Se agrega el puntaje y la cantidad de zombies vivos al HUD",
             "Se agrega el item HEART para recuperar vida",
-            "Se agrega tiempo de juego transcurrido al HUB",
+            "Se agrega tiempo de juego transcurrido al HUD",
         ]
     },
     {
@@ -66,11 +66,11 @@ const releases = [
         date: "10-12-2024",
         changes: [
             "Se agrega el item BOMB para matar a todos los zombies en la pantalla",
-            "Se agrega la pagina de Releases en el sitio web del juego",
+            "Se agrega la página de Releases en el sitio web del juego",
         ]
     }
-
 ];
+
 
 function renderReleases() {
     const container = document.getElementById('releases-container');
