@@ -98,12 +98,12 @@ function renderReleases() {
                 </div>
                 <div class="order-1 bg-zinc-800 rounded-lg shadow-xl md:w-5/12 px-6 py-4 w-full">
                     <div class="flex justify-between items-center">
-                        <time class="font-mono italic text-green-500">${release.date}</time>
+                        <time class="text-sm font-mono italic text-green-500">${release.date}</time>
                         ${isLatest ? '<span class="px-2 py-1 text-[10px] bg-green-500 text-black rounded-full">NUEVO</span>' : ''}
                     </div>
-                    <h3 class="mb-3 font-bold text-green-400 text-xl">Version ${release.version}</h3>
-                    <ul class="list-disc list-inside text-sm text-gray-300">
-                        ${release.changes.map(change => `<li>${change}</li>`).join('')}
+                    <h3 class="mb-3 font-bold text-green-400 text-sm">Version ${release.version}</h3>
+                    <ul class="list-disc list-inside text-[10px] text-gray-300">
+                        ${release.changes.map(change => `<li class=" mb-2">${change}</li>`).join('')}
                     </ul>
                 </div>
             </div>`;
