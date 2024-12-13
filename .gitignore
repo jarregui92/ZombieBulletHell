@@ -1,0 +1,40 @@
+
+# Dependencias
+/node_modules
+/vendor
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE y editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+*.zip
+*.rar
+
+# Archivos de configuración local
+.env
+.env.local
+*.local
+
+# Archivos de log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de compilación y distribución
+/dist
+/build
+/public/hot
+
+# Otros
+.cache
+.temp
+*.bak
+*.swp
+*~
