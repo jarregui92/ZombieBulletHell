@@ -139,12 +139,83 @@ function draw(){
 }
 
 function askPlayerName() {
-    playerName = prompt('Enter your name (3 chars max):');
-    if (playerName) {
-        playerName = playerName.substring(0, 3).toUpperCase();
-        return true;
+    return new Promise((resolve) => {
+        const modal = document.getElementById('nameModal');
+        const modalContent = document.getElementById('modalContent');
+        const input = document.getElementById('playerNameInput');
+        const saveBtn = document.getElementById('saveNameBtn');
+
+        // Deshabilitar temporalmente el canvas de p5.js
+        noLoop();
+        
+        // Mostrar modal con animación
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modalContent.classList.add('opacity-100', 'scale-100');
+            modalContent.classList.remove('opacity-0', 'scale-95');
+            // Forzar el foco en el input
+            input.focus();
+        }, 10);
+
+        input.value = '';
+
+        function saveName() {
+            const name = input.value.trim().toUpperCase();
+            if (name) {
+                playerName = name.substring(0, 3);
+                modal.style.display = 'none';
+                modalContent.classList.remove('opacity-100', 'scale-100');
+                loop(); // Reactivar el canvas
+                resolve(true);
+            } else {
+                input.classList.add('shake');
+                setTimeout(() => input.classList.remove('shake'), 500);
+            }
+        }
+
+        // Event listeners
+        saveBtn.onclick = saveName;
+        input.onkeydown = (e) => {
+            e.stopPropagation(); // Prevenir que p5.js capture el evento
+            if (e.key === 'Enter') saveName();
+        };
+    });
+}
+
+async function restart() {
+    if (await askPlayerName()) {
+        saveScore();
+        // Asegurarse de que el modal esté completamente cerrado
+        const modal = document.getElementById('nameModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        modal.style.display = 'none';
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+        
+        // Reiniciar todo el estado del juego
+        gameStarted = false;
+        gameOver = false;
+        zombieSpawnTime = 300;
+        zombieMaxSpeed = 2;
+        player = null;
+        zombies = [];
+        coins = [];
+        hearts = [];
+        bombs = [];
+        score = 0;
+        gameTime = 0;
+        frameCount = 0;
+        frame = 0;
+        
+        // Reactivar el bucle de p5.js y mostrar el botón de inicio
+        loop();
+        const startButton = document.getElementById('start-button');
+        startButton.style.display = 'block';
+
+        // Forzar una actualización de los high scores
+        updateHighScoresDisplay();
     }
-    return false;
 }
 
 function saveScore() {
@@ -169,11 +240,36 @@ function saveScore() {
 
 function updateHighScoresDisplay() {
     const scores = JSON.parse(localStorage.getItem('scores') || '[]');
-    const scoresHtml = scores.map(score => 
-        `<p class="text-sm">${score.name}: ${score.score} (${Math.floor(score.time/60)}:${(score.time%60).toString().padStart(2,'0')})</p>`
-    ).join('');
+    const medals = ['🥇', '🥈', '🥉'];
     
-    document.getElementById('highScores').innerHTML = scoresHtml || '<p class="text-sm">No scores yet!</p>';
+    // Generar las 3 filas, usando scores reales o valores por defecto
+    const rows = medals.map((medal, index) => {
+        // Si existe el score para este índice, usarlo
+        if (scores[index]) {
+            const name = (scores[index].name + '___').slice(0, 3);
+            const scoreStr = scores[index].score.toString().padStart(6, '0');
+            const minutes = Math.floor(scores[index].time/60).toString().padStart(2, '0');
+            const seconds = (scores[index].time%60).toString().padStart(2, '0');
+            const timeStr = `${minutes}:${seconds}`;
+            
+            return `<div class="flex items-center justify-center space-x-2 py-1 font-arcade">
+                <span>${medal}</span>
+                <span>${name}</span>
+                <span>${scoreStr}</span>
+                <span class="text-gray-500">${timeStr}</span>
+            </div>`;
+        }
+        
+        // Si no existe, usar valores por defecto
+        return `<div class="flex items-center justify-center space-x-2 py-1 font-arcade">
+            <span>${medal}</span>
+            <span>___</span>
+            <span>000000</span>
+            <span class="text-gray-500">00:00</span>
+        </div>`;
+    }).join('');
+    
+    document.getElementById('highScores').innerHTML = rows;
 }
 
 function startGame() {
@@ -191,16 +287,19 @@ function startGame() {
     frameCount = 0;
 }
 
-function restart(){
-    if (askPlayerName()) {
-        saveScore();
-        gameStarted = false;
-        gameOver = true;
+function mouseClicked() {
+    // Solo disparar si el juego está activo
+    if (gameStarted) {
+        player.shoot();
     }
 }
 
-function mouseClicked(){
-    player.shoot();
+// Modificar keyPressed para que no interfiera con el input
+function keyPressed(e) {
+    if (document.activeElement.tagName === 'INPUT') {
+        return false; // Importante: retornar false para prevenir el comportamiento por defecto
+    }
+    return true;
 }
 
 // Llamar a esta función al inicio para mostrar las puntuaciones guardadas
