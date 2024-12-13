@@ -68,7 +68,16 @@ const releases = [
             "Se agrega el item BOMB para matar a todos los zombies en la pantalla",
             "Se agrega la página de Releases en el sitio web del juego",
         ]
-    }
+    },
+    {
+        version: "1.0.8",
+        date: "10-12-2024",
+        changes: [
+            "Se añade boton de Inicio de juego en la página web",
+            "Se aplico el sistema de puntuaciones con LocalStorage",
+            "Se optimizaron las imagenes para reducir el tamaño del juego y mejorar los tiempos de carga",
+        ]
+    },
 ];
 
 
