@@ -71,11 +71,14 @@ const releases = [
     },
     {
         version: "1.0.8",
-        date: "10-12-2024",
+        date: "13-12-2024",
         changes: [
             "Se añade boton de Inicio de juego en la página web",
             "Se aplico el sistema de puntuaciones con LocalStorage",
             "Se optimizaron las imagenes para reducir el tamaño del juego y mejorar los tiempos de carga",
+            "Se añade fuente personalizada al juego para un estilo mas retro",
+            "Nuevo estilo de ingreso de nombre de jugador",
+            "HUD de High Scores modificado y estilizado",
         ]
     },
 ];
