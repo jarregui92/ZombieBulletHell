@@ -93,8 +93,15 @@ function renderReleases() {
         const html = `
             <div class="mb-8 md:flex justify-between ${isEven ? '' : 'flex-row-reverse'} items-center w-full">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 mb-2 md:mb-0 flex items-center order-1 shadow-xl w-12 h-12 rounded-full">
+                <div class="z-20 mb-2 md:mb-0 flex items-center order-1 shadow-xl w-12 h-12 rounded-full relative">
                     <img src="/img/zombie-icon.svg" class="mx-auto">
+                    <!-- Línea horizontal (solo visible en md+) -->
+                    <div class="absolute w-8 h-[2px] bg-green-500 ${isEven ? 'left-full' : 'right-full'} hidden md:block"></div>
+                    <div class="absolute w-2 h-2 bg-green-500 rounded-full ${isEven ? 'left-[calc(100%+28px)]' : 'right-[calc(100%+28px)]'} top-1/2 transform -translate-y-1/2 hidden md:block"></div>
+                    
+                    <!-- Línea vertical (solo visible en móvil) -->
+                    <div class="md:hidden absolute h-2 w-[2px] bg-green-500 left-1/2 transform -translate-x-1/2 top-full"></div>
+                    <div class="md:hidden absolute w-2 h-2 bg-green-500 rounded-full left-1/2 transform -translate-x-1/2 top-[calc(100%+5px)]"></div>
                 </div>
                 <div class="order-1 bg-zinc-800 rounded-lg shadow-xl md:w-5/12 px-6 py-4 w-full">
                     <div class="flex justify-between items-center">
