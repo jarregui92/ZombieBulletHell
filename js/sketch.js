@@ -8,6 +8,9 @@ let zombieMaxSpeed = 2;
 let frame = 0
 let score = 0;
 let gameTime = 0; // Add game time counter
+let playerName = '';
+let gameStarted = false; // Cambiar a false por defecto
+let gameOver = false;
 
 let bg;
 let gameAssets = {};
@@ -28,11 +31,13 @@ function setup(){
     let cnv = createCanvas(700, 700);
     cnv.parent(canvasContainer);
     bg = loadImage('./img/background.jpg');
-    player = new Player();
-    gameTime = 0;
 }
 
 function draw(){
+    if (!gameStarted) {
+        background(0);
+        return;
+    }
     // Limitar el número máximo de zombies
     const MAX_ZOMBIES = 100;
     if (zombies.length >= MAX_ZOMBIES) {
@@ -133,19 +138,70 @@ function draw(){
     document.querySelector('#game-time').textContent = timeString;
 }
 
-function restart(){
+function askPlayerName() {
+    playerName = prompt('Enter your name (3 chars max):');
+    if (playerName) {
+        playerName = playerName.substring(0, 3).toUpperCase();
+        return true;
+    }
+    return false;
+}
+
+function saveScore() {
+    let scores = JSON.parse(localStorage.getItem('scores') || '[]');
+    
+    scores.push({
+        name: playerName,
+        score: score,
+        time: gameTime,
+        date: new Date().toISOString()
+    });
+
+    // Ordenar por puntuación más alta
+    scores.sort((a, b) => b.score - a.score);
+    
+    // Mantener solo los 3 mejores scores
+    scores = scores.slice(0, 3);
+    
+    localStorage.setItem('scores', JSON.stringify(scores));
+    updateHighScoresDisplay();
+}
+
+function updateHighScoresDisplay() {
+    const scores = JSON.parse(localStorage.getItem('scores') || '[]');
+    const scoresHtml = scores.map(score => 
+        `<p class="text-sm">${score.name}: ${score.score} (${Math.floor(score.time/60)}:${(score.time%60).toString().padStart(2,'0')})</p>`
+    ).join('');
+    
+    document.getElementById('highScores').innerHTML = scoresHtml || '<p class="text-sm">No scores yet!</p>';
+}
+
+function startGame() {
+    gameStarted = true;
+    gameOver = false;
     player = new Player();
     zombies = [];
     coins = [];
-    hearts = []; // Resetear corazones
-    bombs = []; // Reset bombs array
+    hearts = [];
+    bombs = [];
     zombieSpawnTime = 300;
     zombieMaxSpeed = 2;
     score = 0;
     gameTime = 0;
-    frameCount = 0; // Resetear el frameCount para que el tiempo empiece de 0
+    frameCount = 0;
+}
+
+function restart(){
+    if (askPlayerName()) {
+        saveScore();
+        gameStarted = false;
+        gameOver = true;
+    }
 }
 
 function mouseClicked(){
     player.shoot();
 }
+
+// Llamar a esta función al inicio para mostrar las puntuaciones guardadas
+document.addEventListener('DOMContentLoaded', updateHighScoresDisplay);

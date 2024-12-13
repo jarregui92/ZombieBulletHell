@@ -39,6 +39,11 @@
                 <div id="game-container" class="flex justify-center items-center">
                     <!-- El lienzo de p5.js se colocará aquí -->
                 </div>
+                <div id="start-button" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <button onclick="startGame()" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors font-bold text-lg">
+                        JUGAR
+                    </button>
+                </div>
             </div>
             <div
                 class="absolute bottom-4 left-4 right-4 flex justify-between items-center px-6 py-3 bg-zinc-800/90 rounded-lg">
@@ -88,11 +93,8 @@
         <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 text-center">
             <div class="p-2 bg-zinc-800 rounded-lg">
                 <h3 class="text-sm text-green-500 font-bold mb-2">HIGH SCORES</h3>
-                <div class="text-gray-400 space-y-1">
-                    <p class="text-sm">Soon !</p>
-                    <!-- <p>Player1: 150000</p>
-                    <p>Player2: 120000</p>
-                    <p>Player3: 090000</p> -->
+                <div class="text-gray-400 space-y-1" id="highScores">
+                    <!-- High scores will be loaded here -->
                 </div>
             </div>
             <div class="p-2 bg-zinc-800 rounded-lg">
@@ -115,6 +117,17 @@
     <script src="./js/coin.js"></script>
     <script src="./js/heart.js"></script>
     <script src="./js/bomb.js"></script>
+    <script>
+        // Agregar después de los scripts existentes
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('start-button');
+            
+            // Mostrar/ocultar botón según estado del juego
+            setInterval(() => {
+                startButton.style.display = !gameStarted ? 'block' : 'none';
+            }, 100);
+        });
+    </script>
 </body>
 
 </html>
