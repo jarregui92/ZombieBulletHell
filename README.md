@@ -11,6 +11,6 @@ Zombie Bullet Hell es un juego de disparos en 2D donde el jugador debe sobrevivi
 - Sistema de puntuación basado en la recolección de monedas.
 - Incremento de dificultad con el tiempo.
 
-### 14-12-2024 - Ultima Versión 1.1.0s
+### 14-12-2024 - Ultima Versión 1.1.0
 - Implementación de API para guardar puntuaciones.
 - Puntuaciones globales activadas, A JUGAR!.
