@@ -219,57 +219,64 @@ async function restart() {
 }
 
 function saveScore() {
-    let scores = JSON.parse(localStorage.getItem('scores') || '[]');
-    
-    scores.push({
+    const scoreData = {
         name: playerName,
         score: score,
         time: gameTime,
         date: new Date().toISOString()
-    });
+    };
 
-    // Ordenar por puntuación más alta
-    scores.sort((a, b) => b.score - a.score);
-    
-    // Mantener solo los 3 mejores scores
-    scores = scores.slice(0, 3);
-    
-    localStorage.setItem('scores', JSON.stringify(scores));
-    updateHighScoresDisplay();
+    fetch('scores.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(scoreData)
+    })
+    .then(response => response.json())
+    .then(() => updateHighScoresDisplay())
+    .catch(error => console.error('Error:', error));
 }
 
 function updateHighScoresDisplay() {
-    const scores = JSON.parse(localStorage.getItem('scores') || '[]');
-    const medals = ['🥇', '🥈', '🥉'];
-    
-    // Generar las 3 filas, usando scores reales o valores por defecto
-    const rows = medals.map((medal, index) => {
-        // Si existe el score para este índice, usarlo
-        if (scores[index]) {
-            const name = (scores[index].name + '___').slice(0, 3);
-            const scoreStr = scores[index].score.toString().padStart(6, '0');
-            const minutes = Math.floor(scores[index].time/60).toString().padStart(2, '0');
-            const seconds = (scores[index].time%60).toString().padStart(2, '0');
-            const timeStr = `${minutes}:${seconds}`;
+    fetch('scores.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(scores => {
+            const medals = ['🥇', '🥈', '🥉'];
             
-            return `<div class="flex items-center justify-center space-x-2 py-1 font-arcade">
-                <span>${medal}</span>
-                <span>${name}</span>
-                <span>${scoreStr}</span>
-                <span class="text-gray-500">${timeStr}</span>
-            </div>`;
-        }
-        
-        // Si no existe, usar valores por defecto
-        return `<div class="flex items-center justify-center space-x-2 py-1 font-arcade">
-            <span>${medal}</span>
-            <span>___</span>
-            <span>000000</span>
-            <span class="text-gray-500">00:00</span>
-        </div>`;
-    }).join('');
-    
-    document.getElementById('highScores').innerHTML = rows;
+            const rows = medals.map((medal, index) => {
+                if (scores && scores[index]) {
+                    const score = scores[index];
+                    const name = score.name ? (score.name + '___').slice(0, 3) : '___';
+                    const scoreStr = score.score.toString().padStart(6, '0');
+                    const minutes = Math.floor(score.time/60).toString().padStart(2, '0');
+                    const seconds = (score.time%60).toString().padStart(2, '0');
+                    const timeStr = `${minutes}:${seconds}`;
+                    
+                    return `<div class="flex items-center justify-center space-x-2 py-1 font-arcade">
+                        <span>${medal}</span>
+                        <span>${name}</span>
+                        <span>${scoreStr}</span>
+                        <span class="text-gray-500">${timeStr}</span>
+                    </div>`;
+                }
+            }).join('');
+            
+            const highScoresElement = document.getElementById('highScores');
+            if (highScoresElement) {
+                highScoresElement.innerHTML = rows;
+            } else {
+                console.error('Elemento highScores no encontrado');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar scores:', error);
+        });
 }
 
 function startGame() {
