@@ -81,6 +81,15 @@ const releases = [
             "HUD de High Scores modificado y estilizado",
         ]
     },
+    ,
+    {
+        version: "1.1.0",
+        date: "14-12-2024",
+        changes: [
+            "Implementacion de API para guardar puntuaciones",
+            "Puntuaciones globales activadass, A JUGAR!",
+        ]
+    },
 ];
 
 
