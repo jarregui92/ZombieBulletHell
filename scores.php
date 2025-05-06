@@ -7,6 +7,9 @@ header('X-XSS-Protection: 1; mode=block');
 header('Content-Security-Policy: default-src \'none\'; script-src \'self\'');
 header('Cache-Control: no-store, no-cache, must-revalidate');
 
+// Asegurarse de que no haya salida antes de los headers
+ob_start();
+
 const SCORES_FILE = __DIR__ . '/scores.json';
 const MAX_REQUESTS_PER_MINUTE = 30;
 const REQUEST_TIMEOUT = 60;
@@ -85,7 +88,8 @@ try {
         
         // Asegurarse que exista la clave 'scores'
         if (!isset($scores['scores'])) {
-            $scores['scores'] = [];
+            echo json_encode([]);
+            exit;
         }
         
         // Ordenar por puntuación
@@ -136,3 +140,5 @@ try {
     http_response_code(500);
     echo json_encode(['error' => 'Error interno del servidor']);
 }
+
+ob_end_flush();

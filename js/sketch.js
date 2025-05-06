@@ -242,13 +242,24 @@ function updateHighScoresDisplay() {
     fetch('scores.php')
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.json();
+            return response.text().then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error('Respuesta del servidor:', text);
+                    throw new Error('Error al parsear JSON');
+                }
+            });
         })
         .then(scores => {
-            const medals = ['🥇', '🥈', '🥉'];
+            if (!Array.isArray(scores)) {
+                console.error('Formato de scores inválido:', scores);
+                scores = [];
+            }
             
+            const medals = ['🥇', '🥈', '🥉'];
             const rows = medals.map((medal, index) => {
                 if (scores && scores[index]) {
                     const score = scores[index];
@@ -265,17 +276,20 @@ function updateHighScoresDisplay() {
                         <span class="text-gray-500">${timeStr}</span>
                     </div>`;
                 }
+                return '';
             }).join('');
             
             const highScoresElement = document.getElementById('highScores');
             if (highScoresElement) {
-                highScoresElement.innerHTML = rows;
-            } else {
-                console.error('Elemento highScores no encontrado');
+                highScoresElement.innerHTML = rows || 'No hay puntuaciones';
             }
         })
         .catch(error => {
             console.error('Error al cargar scores:', error);
+            const highScoresElement = document.getElementById('highScores');
+            if (highScoresElement) {
+                highScoresElement.innerHTML = '<div class="text-red-500 text-center">Error al cargar puntuaciones</div>';
+            }
         });
 }
 
